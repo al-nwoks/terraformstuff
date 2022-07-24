@@ -16,3 +16,8 @@ variable "s3versioning" {
   type    = string
   default = "Disabled"
 }
+
+variable "iamrolearn" {
+  type    = string
+  default = "arn:aws:iam::372287445072:role/s3read"
+}
