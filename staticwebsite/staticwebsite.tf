@@ -24,3 +24,12 @@ module "staticwebsite-s3policy" {
   s3arn                 = module.staticwebsite-s3.staticwebsite-s3arn
   iamrolearn            = var.iamrolearn
 }
+#module "staticwebsite-cloudfront" {
+#  source                = "./modules/cloudfront"
+#  category              = var.category
+#  distributionendpoint  = var.distributionendpoint
+#  s3name                = var.s3name
+#  s3regionaldomainname  = module.staticwebsite-s3.staticwebsite-s3regionaldomainname
+#  iamrolearn            = var.iamrolearn
+#  acmcertificatearn     = var.acmcertificatearn
+#}
