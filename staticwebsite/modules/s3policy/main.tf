@@ -6,10 +6,26 @@ resource "aws_s3_bucket_policy" "staticwebsite-s3bucketpolicy" {
 
 data "aws_iam_policy_document" "staticwebsite-s3bucketpolicydata" {
   statement {
-    sid = "ReadObjects"
+    sid = "ReadObject"
     principals {
       type        = "AWS"
       identifiers = ["${var.iamrolearn}"]
+    }
+    actions = [
+      "s3:ListBucket",
+      "s3:GetObject",
+      "s3:PutObject"
+    ]
+    resources = [
+      "${var.s3arn}",
+      "${var.s3arn}/*"
+    ]
+  }
+  statement {
+    sid = "CloudFrontAccess"
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity EU2IZEGACPVHL"]
     }
     actions = [
       "s3:ListBucket",
