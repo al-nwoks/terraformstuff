@@ -30,7 +30,7 @@ jobs:
    - name: checkout
      uses: actions/checkout@v2
 
-   - name: init terraform
+   - name: initialize terraform
      run: |
       #  version=0.14.9
        echo "installing tfenv ..."
@@ -40,7 +40,7 @@ jobs:
        terraform init -upgrade
        terraform validate
        
-   - name: plan
+   - name: plan staticwebsite
      run: |
-       terraform plan -out ${{ env.PLAN_NAME }}      
+       cd staticwebsite && terraform plan -out ${{ env.PLAN_NAME }}      
 
