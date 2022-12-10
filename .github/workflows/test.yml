@@ -10,7 +10,7 @@ jobs:
  test-infra:
    runs-on: ubuntu-latest
 
-   default: 
+   defaults: 
      run: 
        working-directory: staticwebsite
 
