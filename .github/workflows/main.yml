@@ -8,6 +8,7 @@ on:
 jobs:
  deploy-infra:
    runs-on: ubuntu-latest
+ working-directory: staticwebsite
 
    permissions:
      id-token: write
@@ -40,9 +41,11 @@ jobs:
        terraform validate
        
    - name: plan
+     working-directory: staticwebsite
      run: |
        terraform plan -out ${{ env.PLAN_NAME }}    
 
    - name: apply
+     working-directory: staticwebsite
      run: |
       terraform apply ${{ env.PLAN_NAME }}
