@@ -1,4 +1,4 @@
-name: main pipeline
+name: main-pipeline
 on:
 #  pull_request:
 #    branches: [main]
@@ -35,20 +35,18 @@ jobs:
 
    - name: init terraform
      run: |
-       version=0.14.9
+      #  version=0.14.9
        echo "installing tfenv ..."
        git clone https://github.com/tfutils/tfenv.git ~/.tfenv
        ~/.tfenv/bin/tfenv install $version
        ~/.tfenv/bin/tfenv use $version
-       terraform init
+       terraform init -upgrade
        terraform validate
        
    - name: plan
-     working-directory: staticwebsite
      run: |
        terraform plan -out ${{ env.PLAN_NAME }}    
 
    - name: apply
-     working-directory: staticwebsite
      run: |
       terraform apply ${{ env.PLAN_NAME }}
