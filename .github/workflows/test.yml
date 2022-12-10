@@ -9,7 +9,10 @@ on:
 jobs:
  test-infra:
    runs-on: ubuntu-latest
-   working-directory: staticwebsite
+
+   default: 
+     run: 
+       working-directory: staticwebsite
 
    permissions:
      id-token: write
