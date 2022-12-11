@@ -36,7 +36,7 @@ jobs:
 
    - name: check dir
      run: |
-       ls 
+       pwd && ls 
 
    - name: initialize terraform
      run: |
