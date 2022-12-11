@@ -28,7 +28,7 @@ jobs:
      uses: aws-actions/configure-aws-credentials@v1
      with:
        role-to-assume: ${{env.AWS_ROLE_ARN}}
-       role-session-name: testrolesession
+       role-session-name: terraform
        aws-region: ${{env.AWS_DEFAULT_REGION}}
 
    - name: checkout
