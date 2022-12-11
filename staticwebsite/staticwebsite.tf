@@ -2,13 +2,22 @@ provider "aws" {
   region  = var.aws_region
 }
  
-terraform {
-  backend "s3" {
-    bucket = "kaye-terraform-states"
-    region = "ap-southeast-1"
-    key    = "StaticWebsiteDemo.tfstate"
-  }
-  required_version = ">= 1.0.11"
+# You cannot create a new backend by simply defining this and then
+# immediately proceeding to "terraform apply". The S3 backend must
+# be bootstrapped according to the simple yet essential procedure in
+# https://github.com/cloudposse/terraform-aws-tfstate-backend#usage
+module "terraform_state_backend" {
+  source = "cloudposse/tfstate-backend/aws"
+  # Cloud Posse recommends pinning every module to a specific version
+  # version     = "x.x.x"
+  namespace  = "alnwoks"
+  stage      = "infra"
+  name       = "terraform"
+  attributes = ["state"]
+
+  terraform_backend_config_file_path = "."
+  terraform_backend_config_file_name = "backend.tf"
+  force_destroy                      = false
 }
 
 module "staticwebsite-s3" {
@@ -24,6 +33,7 @@ module "staticwebsite-s3policy" {
   s3arn                 = module.staticwebsite-s3.staticwebsite-s3arn
   iamrolearn            = var.iamrolearn
 }
+
 #module "staticwebsite-cloudfront" {
 #  source                = "./modules/cloudfront"
 #  category              = var.category
