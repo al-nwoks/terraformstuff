@@ -11,14 +11,14 @@ data "aws_caller_identity" "current" {}
 module "terraform_state_backend" {
   source     = "cloudposse/tfstate-backend/aws"
   version    = "0.38.1"
-  namespace  = "alnwoks"
-  name       = "tfstate"
+  namespace  = var.organization
+  name       = var.name
   attributes = [data.aws_caller_identity.current.account_id]
 
   terraform_backend_config_file_path = ""
   terraform_backend_config_file_name = "backend.tf"
 
-  terraform_state_file = "staticwebsite/terraform.tfstate"
+  terraform_state_file = "${var.name}/terraform.tfstate"
   force_destroy        = false
 }
 
@@ -33,7 +33,7 @@ module "staticwebsite-s3policy" {
   category              = var.category
   s3name                = var.s3name
   s3arn                 = module.staticwebsite-s3.staticwebsite-s3arn
-  iamrolearn            = var.iamrolearn
+  iamrolearn            = module.staticwebsite_role.iam_role_arn
 }
 
 #module "staticwebsite-cloudfront" {
@@ -43,5 +43,35 @@ module "staticwebsite-s3policy" {
 #  s3name                = var.s3name
 #  s3regionaldomainname  = module.staticwebsite-s3.staticwebsite-s3regionaldomainname
 #  iamrolearn            = var.iamrolearn
-#  acmcertificatearn     = var.acmcertificatearn
+#  acmcertificatearn     = module.acm.acm_certificate_arn
 #}
+
+
+module "staticwebsite_role" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
+  
+  create_role            = true
+  role_name              = var.staticwebsiterole
+  attach_readonly_policy = true
+
+}
+
+module "acm" {
+  source  = "terraform-aws-modules/acm/aws"
+  version = "~> 4.0"
+
+  domain_name  = var.domain_name
+  zone_id      = var.zone_id 
+
+  subject_alternative_names = [
+    "*.${var.domain_name}",
+    "app.sub.${var.domain_name}",
+  ]
+
+  wait_for_validation = true
+
+  tags = {
+    Name = "${var.domain_name}"
+  }
+}
+
