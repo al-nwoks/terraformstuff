@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "staticwebsite-s3bucketpolicydata" {
     sid = "CloudFrontAccess"
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity EU2IZEGACPVHL"]
+      identifiers = ["${var.cloudfrontoaiarn}"]
     }
     actions = [
       "s3:ListBucket",

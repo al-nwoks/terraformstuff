@@ -10,3 +10,8 @@ variable "s3arn" {
 variable "iamrolearn" {
   type    = string
 }
+
+variable "cloudfrontoaiarn" {
+  type = string
+  default = "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity EU2IZEGACPVHL"
+}
