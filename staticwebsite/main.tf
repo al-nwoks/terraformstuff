@@ -56,6 +56,7 @@ module "staticwebsite_role" {
   create_role            = true
   role_name              = var.role_name
   attach_readonly_policy = true
+  role_requires_mfa      = false
   
   trusted_role_arns = [
     # "arn:aws:iam::443420183404:root",
