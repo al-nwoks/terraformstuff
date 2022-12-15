@@ -49,13 +49,11 @@ module "staticwebsite-s3policy" {
 
 module "staticwebsite_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
-  
-  # https://aws.amazon.com/blogs/security/announcing-an-update-to-iam-role-trust-policy-behavior/
-  allow_self_assume_role = true
 
   create_role            = true
   role_name              = var.role_name
   attach_readonly_policy = true
+  role_requires_mfa      = false
   
   trusted_role_arns = [
     # "arn:aws:iam::443420183404:root",
