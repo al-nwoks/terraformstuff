@@ -42,8 +42,8 @@ variable "zone_id" {
   type    = string
   default = "Z2ES7B9AZ6SHAE"
 }
-variable "staticwebsiterole" {
+variable "role_name" {
   type    = string
-  default = "websitereader"
+  default = "website-reader"
 }
 

@@ -51,27 +51,27 @@ module "staticwebsite_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
   
   create_role            = true
-  role_name              = var.staticwebsiterole
+  role_name              = var.role_name
   attach_readonly_policy = true
 
 }
 
-module "acm" {
-  source  = "terraform-aws-modules/acm/aws"
-  version = "~> 4.0"
+# module "acm" {
+#   source  = "terraform-aws-modules/acm/aws"
+#   version = "~> 4.0"
 
-  domain_name  = var.domain_name
-  zone_id      = var.zone_id 
+#   domain_name  = var.domain_name
+#   zone_id      = var.zone_id 
 
-  subject_alternative_names = [
-    "*.${var.domain_name}",
-    "app.sub.${var.domain_name}",
-  ]
+#   subject_alternative_names = [
+#     "*.${var.domain_name}",
+#     "app.sub.${var.domain_name}",
+#   ]
 
-  wait_for_validation = true
+#   wait_for_validation = true
 
-  tags = {
-    Name = "${var.domain_name}"
-  }
-}
+#   tags = {
+#     Name = "${var.domain_name}"
+#   }
+# }
 
