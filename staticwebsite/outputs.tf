@@ -1,7 +1,3 @@
-# output "role_arn" {
-#   value = module.oidc_github.iam_role_arn
-# }
-
 output "s3_bucket_domain_name" {
   value = module.terraform_state_backend.s3_bucket_domain_name
 }
